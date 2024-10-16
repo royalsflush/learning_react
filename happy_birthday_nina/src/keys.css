@@ -1,0 +1,49 @@
+.keys {
+    border-radius: 10px 10px;
+    position: absolute;
+    z-index: 1;
+}
+
+.keys:active {
+  filter: brightness(70%);
+}
+
+.key-one {
+    width: 2.9%;
+    height: 76%;
+    background-color: #ed2005;
+    left: 6.1%;
+    top: 6%;
+}
+
+.key-two {
+    width: 2.9%;
+    height: 72.7%;
+    background-color: #fc6e08;
+    left: 9.9%;
+    top: 8.2%;
+}
+
+.key-three {
+    width: 2.9%;
+    height: 29.1%;
+    background-color: #fc6e08;
+    left: 13.6%;
+    top: 51.5%;
+}
+
+.key-four {
+    width: 2.9%;
+    height: 68.7%;
+    background-color: blueviolet;
+    left: 17.07%;
+    top: 11.8%;
+}
+
+.key-five {
+    width: 2.9%;
+    height: 72.7%;
+    background-color: blueviolet;
+    left: 20.9%;
+    top: 8.2%;
+}
