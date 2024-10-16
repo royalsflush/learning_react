@@ -13,19 +13,16 @@
   }
 }
 
-.App-header {
+.marimba-container {
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.marimba {
+  width: 100%;
+  height: auto;
 }
 
 @keyframes App-logo-spin {
@@ -35,4 +32,26 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.keys {
+    border-radius: 10px 10px;
+    position: absolute;
+    z-index: 1;
+}
+
+.key-one {
+    width: 2.9%;
+    height: 76%;
+    background-color: blueviolet;
+    left: 6.1%;
+    top: 6%;
+}
+
+.key-two {
+    width: 2.9%;
+    height: 72.7%;
+    background-color: blueviolet;
+    left: 9.9%;
+    top: 8.2%;
 }

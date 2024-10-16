@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+
+function handleClick() {
+  alert('click');
+}
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div className="marimba-container">
+        <img
+          className="marimba"
+          onClick={handleClick}
+          src="./marimba.png"
+          alt="marimba"
+          style={{"pointer-events": "all"}}
+        />
+        <div className="keys key-one"></div>
+        <div className="keys key-two"></div>
+        </div>
       </header>
+      <button>Play happy birthday!</button>
     </div>
   );
 }
