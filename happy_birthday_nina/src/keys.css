@@ -1,5 +1,6 @@
 .keys {
     border-radius: 10px 10px;
+    border: solid black;
     position: absolute;
     z-index: 1;
 }
@@ -8,42 +9,90 @@
   filter: brightness(70%);
 }
 
-.key-one {
+.key-esharp2 {
     width: 2.9%;
-    height: 76%;
+    height: 75%;
     background-color: #ed2005;
-    left: 6.1%;
+    left: 6%;
     top: 6%;
 }
 
-.key-two {
+.key-f2 {
     width: 2.9%;
     height: 72.7%;
     background-color: #fc6e08;
-    left: 9.9%;
-    top: 8.2%;
+    left: 9.7%;
+    top: 7.9%;
 }
 
-.key-three {
+.key-a2 {
     width: 2.9%;
     height: 29.1%;
-    background-color: #fc6e08;
-    left: 13.6%;
-    top: 51.5%;
+    background-color: #fcc308;
+    left: 13.4%;
+    top: 51.2%;
 }
 
-.key-four {
+.key-b3 {
     width: 2.9%;
     height: 68.7%;
-    background-color: blueviolet;
-    left: 17.07%;
-    top: 11.8%;
+    background-color: #e4fc08;
+    left: 17%;
+    top: 11.5%;
 }
 
-.key-five {
+.key-c3 {
     width: 2.9%;
-    height: 72.7%;
-    background-color: blueviolet;
-    left: 20.9%;
-    top: 8.2%;
+    height: 66.7%;
+    background-color: #96fc08;
+    left: 20.7%;
+    top: 13%;
+}
+
+.key-e3 {
+    width: 2.9%;
+    height: 64.7%;
+    background-color: #29fc08;
+    left: 24.4%;
+    top: 14.8%;
+}
+
+.key-fsharp3 {
+    width: 2.9%;
+    height: 25.3%;
+    background-color: #08fc8a;
+    left: 28.1%;
+    top: 53.9%;
+}
+
+.key-g3 {
+    width: 2.9%;
+    height: 61.1%;
+    background-color: #08fccf;
+    left: 31.8%;
+    top: 18%;
+}
+
+.key-a4 {
+    width: 2.9%;
+    height: 59.1%;
+    background-color: #08e8fc;
+    left: 35.5%;
+    top: 19.6%;
+}
+
+.key-d4 {
+    width: 2.9%;
+    height: 22.8%;
+    background-color: #08b3fc;
+    left: 39.05%; 
+    top: 55.4%;
+}
+
+.key-esharp4 {
+    width: 2.9%;
+    height: 55.1%;
+    background-color: #0886fc;
+    left: 42.8%; 
+    top: 23.1%;
 }
