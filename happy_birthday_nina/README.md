@@ -17,4 +17,4 @@ screen
 ## Deployment
 
 I'm using render.com for a continuous build and deploy of it. App is live in
-happybirthdaynina.royalsflush.com
+[happybirthdaynina.royalsflush.com](https://happybirthdaynina.royalsflush.com)
