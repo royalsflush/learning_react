@@ -16,7 +16,6 @@
 }
 
 .marimba-container {
-  background-color: #282c34;
   position: relative;
   font-size: calc(10px + 2vmin);
   color: white;
@@ -36,4 +35,11 @@
   }
 }
 
-
+.happy-button {
+  background: url("./images/btn.png");
+  font-size: 35px;
+  color: white;
+  border-radius: 12px;
+  padding: 14px 40px;
+  text-shadow: 2px 2px 2px black;
+}

@@ -52,7 +52,9 @@ function App() {
         <Key key_name="d4" />
         <Key key_name="esharp4" />
         </div>
-      <button onClick={playHappyBirthday}>Play happy birthday!</button>
+      <button
+        className="happy-button"
+        onClick={playHappyBirthday}>Play happy birthday!</button>
     </div>
   );
 }
