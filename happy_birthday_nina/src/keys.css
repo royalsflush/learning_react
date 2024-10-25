@@ -96,3 +96,83 @@
     left: 42.8%; 
     top: 23.1%;
 }
+
+.key-f4 {
+    width: 2.9%;
+    height: 52.8%;
+    background-color: #0886fc;
+    left: 46.5%; 
+    top: 25%;
+}
+
+.key-g4 {
+    width: 2.9%;
+    height: 51.1%;
+    background-color: #0886fc;
+    left: 50.2%; 
+    top: 26.3%;
+}
+
+.key-b5 {
+    width: 2.9%;
+    height: 19.1%;
+    background-color: #0886fc;
+    left: 53.9%; 
+    top: 58%;
+}
+
+.key-c5 {
+    width: 2.9%;
+    height: 47.1%;
+    background-color: #0886fc;
+    left: 57.5%; 
+    top: 30%;
+}
+
+.key-e5 {
+    width: 2.9%;
+    height: 45.1%;
+    background-color: #0886fc;
+    left: 61.1%; 
+    top: 31.7%;
+}
+
+.key-fsharp5 {
+    width: 2.9%;
+    height: 43.3%;
+    background-color: #0886fc;
+    left: 64.8%; 
+    top: 33.1%;
+}
+
+.key-a6 {
+    width: 2.9%;
+    height: 41%;
+    background-color: #0886fc;
+    left: 68.5%; 
+    top: 35%;
+}
+
+.key-d6 {
+    width: 2.9%;
+    height: 39.1%;
+    background-color: #0886fc;
+    left: 72.2%; 
+    top: 36.3%;
+}
+
+.key-esharp6 {
+    width: 2.9%;
+    height: 37.2%;
+    background-color: #0886fc;
+    left: 75.9%; 
+    top: 38%;
+}
+
+.key-f6 {
+    width: 2.9%;
+    height: 12.5%;
+    background-color: #0886fc;
+    left: 79.5%; 
+    top: 62.5%;
+}

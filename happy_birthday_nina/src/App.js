@@ -36,7 +36,7 @@ function App() {
         <div className="marimba-container">
         <img
           className="marimba"
-          src="./marimba_structure.png"
+          src="./marimba.png"
           alt="marimba"
         />
 
@@ -51,6 +51,16 @@ function App() {
         <Key key_name="a4" />
         <Key key_name="d4" />
         <Key key_name="esharp4" />
+        <Key key_name="f4" />
+        <Key key_name="g4" />
+        <Key key_name="b5" />
+        <Key key_name="c5" />
+        <Key key_name="e5" />
+        <Key key_name="fsharp5" />
+        <Key key_name="a6" />
+        <Key key_name="d6" />
+        <Key key_name="esharp6" />
+        <Key key_name="f6" />
         </div>
       <button
         className="happy-button"
