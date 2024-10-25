@@ -50,9 +50,8 @@ body, html, #root {
   font-size: 35px;
   color: #f542f5;
   border-radius: 12px;
-  border-color: #bbbbbb;
+  border-color: #999999;
   padding: 14px 40px;
-  text-shadow: 2px 2px 2px black;
+  text-shadow: 2px 2px 2px #555555;
   background-image: linear-gradient(#ffffff 45%, #aaaaaa 55%);
-  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
