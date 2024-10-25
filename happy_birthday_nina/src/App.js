@@ -36,7 +36,7 @@ function App() {
         <div className="marimba-container">
         <img
           className="marimba"
-          src="./marimba.png"
+          src="./marimba_structure.png"
           alt="marimba"
         />
 

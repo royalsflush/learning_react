@@ -1,7 +1,18 @@
 @import "keys.css"; 
 
+body, html, #root {
+    height: 100%;
+    margin: 0;
+}
+
 .App {
   text-align: center;
+  background-image: url("./images/btn.png");
+  background-repeat: repeat-x repeat-y;
+  background-size: 20%;
+  background-color: rgba(255,255,255,0.6);
+      background-blend-mode: lighten;
+  height: 100%;
 }
 
 .App-logo {
@@ -36,10 +47,12 @@
 }
 
 .happy-button {
-  background: url("./images/btn.png");
   font-size: 35px;
-  color: white;
+  color: #f542f5;
   border-radius: 12px;
+  border-color: #bbbbbb;
   padding: 14px 40px;
   text-shadow: 2px 2px 2px black;
+  background-image: linear-gradient(#ffffff 45%, #aaaaaa 55%);
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
