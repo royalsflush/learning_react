@@ -1,14 +1,24 @@
 import useSound from 'use-sound';
 
+
 const Key = (props) => {
-  const [play] = useSound('/marimba_sounds/'+ props.key_name + '.mp3');
+  const [play, { sound }] = useSound(
+    '/marimba_sounds/'+ props.key_name + '.mp3',
+    { volume: 1 },
+  );
+  function playKey() {
+    // Playing the same sound twice makes it louder, which is needed because
+    // this is already the maximum volume for the API.
+    sound.play();
+    sound.play();
+  }
   const clazz = 'keys key-'+props.key_name;
 
   return (
     <div
       id={props.key_name}
       className={clazz}
-      onClick={play}>
+      onClick={playKey}>
     </div>
   );
 }

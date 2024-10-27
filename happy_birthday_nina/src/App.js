@@ -1,7 +1,7 @@
 import './App.css';
 import Marimba from './Marimba.js';
 
-function playHappyBirthdayOnce() {
+function playHappyBirthday() {
   const fsharp3 = document.getElementById('fsharp3');
   const a4 = document.getElementById('a4');
   const c5 = document.getElementById('c5');
@@ -55,12 +55,6 @@ function playHappyBirthdayOnce() {
     }, time);
     time += tempo * sequence[i][1];
   }
-}
-
-function playHappyBirthday() {
-  // Playing it twice makes it louder, which is good
-  playHappyBirthdayOnce();
-  playHappyBirthdayOnce();
 }
 
 function App() {
