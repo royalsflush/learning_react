@@ -18,7 +18,7 @@ function playHappyBirthday() {
 }
 
 const Key = (props) => {
-  const [play] = useSound('/marimba_sounds/'+ props.key_name + '.wav');
+  const [play] = useSound('/marimba_sounds/'+ props.key_name + '.mp3');
   const clazz = 'keys key-'+props.key_name;
 
   return (
