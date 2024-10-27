@@ -47,7 +47,8 @@ body, html, #root {
 }
 
 .happy-button {
-  font-size: 35px;
+  width: 30%;
+  font-size: x-large;
   color: #f542f5;
   border-radius: 12px;
   border-color: #999999;
