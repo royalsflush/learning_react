@@ -6,11 +6,16 @@ const Key = (props) => {
     '/marimba_sounds/'+ props.key_name + '.mp3',
     { volume: 1 },
   );
-  function playKey() {
+  function pressKey() {
     // Playing the same sound twice makes it louder, which is needed because
     // this is already the maximum volume for the API.
     sound.play();
     sound.play();
+
+    // Need to add key-pressed class.
+  }
+  function releaseKey() {
+    // Need to remove key-pressed class.
   }
   const clazz = 'keys key-'+props.key_name;
 
@@ -18,7 +23,8 @@ const Key = (props) => {
     <div
       id={props.key_name}
       className={clazz}
-      onClick={playKey}>
+      onMouseDown={pressKey}
+      onMouseUp={releaseKey}>
     </div>
   );
 }
