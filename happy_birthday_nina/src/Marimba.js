@@ -1,6 +1,6 @@
 import Key from './Key.js';
 
-function Marimba() {
+function Marimba({ keys, changeKeyState }) {
   return (
     <div className="marimba-container">
         <img
@@ -9,27 +9,14 @@ function Marimba() {
           alt="marimba"
         />
 
-        <Key key_name="esharp2" />
-        <Key key_name="f2" />
-        <Key key_name="a2" />
-        <Key key_name="b3" />
-        <Key key_name="c3" />
-        <Key key_name="e3" />
-        <Key key_name="fsharp3" />
-        <Key key_name="g3" />
-        <Key key_name="a4" />
-        <Key key_name="d4" />
-        <Key key_name="esharp4" />
-        <Key key_name="f4" />
-        <Key key_name="g4" />
-        <Key key_name="b5" />
-        <Key key_name="c5" />
-        <Key key_name="e5" />
-        <Key key_name="fsharp5" />
-        <Key key_name="a6" />
-        <Key key_name="d6" />
-        <Key key_name="esharp6" />
-        <Key key_name="f6" />
+        {keys.map(key => (
+            <Key
+              key_id={key.id}
+              pressed={key.pressed}
+              changeKeyState={
+                (pressed) => changeKeyState(keys, key.id, pressed)
+              } />
+        ))}
     </div>
   );
 }
