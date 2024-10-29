@@ -1,8 +1,27 @@
 import { useState } from 'react';
+import { useSpring, animated } from '@react-spring/web'
 import './App.css';
 import Marimba from './Marimba.js';
 
 function HappyBirthdayButton({ keys, changeKeyState }) {
+  const [springs, api] = useSpring(() => ({
+    from: { bottom: 800 },
+  }))
+
+  function balloonsGoUp() {
+    api.start({
+      from: {
+        bottom: -800,
+      },
+      to: {
+        bottom: 800,
+      },
+      config: {
+        friction: 120,
+      },
+    })
+  }
+
   function playHappyBirthday() {
     const tempo = 300;
 
@@ -54,13 +73,28 @@ function HappyBirthdayButton({ keys, changeKeyState }) {
     }
     setTimeout(function() {
       changeKeyState(keys, sequence[sequence.length-1][0], false);
+      balloonsGoUp();
     }, time);
   }
 
   return (
+      <div>
       <button
         className="happy-button"
         onClick={playHappyBirthday}>Play happy birthday!</button>
+      <animated.img
+        src="/balloons.png"
+        className="balloons-left"
+        alt="balloons"
+        style={{...springs}}
+      /> 
+      <animated.img
+        src="/balloons.png"
+        className="balloons-right"
+        alt="balloons"
+        style={{...springs}}
+      /> 
+      </div>
   );
 }
 
