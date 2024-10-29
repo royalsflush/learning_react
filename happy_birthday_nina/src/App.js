@@ -42,8 +42,12 @@ function HappyBirthdayButton({ keys, changeKeyState }) {
     changeKeyState(keys, sequence[0][0], true);
 
     for (let i=1; i<sequence.length; i++) {
+      // I'm adding this small delay between key up and next key down to
+      // simulate the key press.
       setTimeout(function () {
         changeKeyState(keys, sequence[i-1][0], false);
+      }, time-100);
+      setTimeout(function () {
         changeKeyState(keys, sequence[i][0], true);
       }, time);
       time += tempo * sequence[i][1];
