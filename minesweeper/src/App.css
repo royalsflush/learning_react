@@ -4,6 +4,15 @@
 
 table {
   display: inline-block;
+  background-color: #eeeeee;
+
+  border-style: outset;
+  border-width: 2px;
+}
+
+th {
+  border-style: outset;
+  border-width: 2px;
 }
 
 td {
@@ -11,3 +20,6 @@ td {
   border-width: 2px;
 }
 
+td:active {
+  border-style: inset;
+}
