@@ -20,6 +20,8 @@ It will have the following features:
   * Leaderboard on the right, and in narrow pages it goes under (which should
   be the default)
 
+The deployed version is minesweeper.royalsflush.com
+
 ## Milestone 1
 
 Fixed size board and bombs, no leaderboard
