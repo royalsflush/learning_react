@@ -16,10 +16,19 @@ th {
 }
 
 td {
+  width: 12px;
+  height: 24px;
+
+  background-color: #eeeeee;
   border-style: outset;
   border-width: 2px;
 }
 
 td:active {
   border-style: inset;
+}
+
+td.clicked {
+  border-style: none;
+  filter: brightness(95%);
 }

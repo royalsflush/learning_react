@@ -46,7 +46,7 @@ function initialiseBoard(board_size, bomb_pos) {
       board[i][j] = {
         x: i,
         y: j,
-        content: '_',
+        content: '',
         clicked: false,
         flagged: false
       }
@@ -62,7 +62,7 @@ function initialiseBoard(board_size, bomb_pos) {
     for (let j=0; j<board_size; j++) {
       if (board[i][j].content === 'B') continue;
       const bomb_count = countAdjacentBombs(board, i, j);
-      board[i][j].content = bomb_count === 0? '_' : bomb_count; 
+      board[i][j].content = bomb_count === 0? '' : bomb_count; 
     }
   }
 
@@ -96,9 +96,11 @@ function Board() {
           <tr>
           {row.map(cell => {
             return <td
-              onClick={(e) => handleClick(e, cell.x, cell.y)}
-              onContextMenu={(e) => handleClick(e, cell.x, cell.y)}>
-              {cell.clicked? cell.content : cell.flagged? 'F' : '_'}
+                onClick={(e) => handleClick(e, cell.x, cell.y)}
+                onContextMenu={(e) => handleClick(e, cell.x, cell.y)}
+                className={cell.clicked? "clicked" : ""}
+              >
+              {cell.clicked? cell.content : cell.flagged? 'F' : ''}
               </td>
           })}
           </tr>
