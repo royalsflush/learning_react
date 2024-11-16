@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css';
 
 function calculateBombPosition(board_size, bomb_count) {
@@ -46,7 +47,7 @@ function initialiseBoard(board_size, bomb_pos) {
         x: i,
         y: j,
         content: '_',
-        hide: false
+        clicked: false
       }
   }
 
@@ -59,7 +60,8 @@ function initialiseBoard(board_size, bomb_pos) {
   for (let i=0; i<board_size; i++) {
     for (let j=0; j<board_size; j++) {
       if (board[i][j].content === 'B') continue;
-      board[i][j].content = countAdjacentBombs(board, i, j);
+      const bomb_count = countAdjacentBombs(board, i, j);
+      board[i][j].content = bomb_count === 0? '_' : bomb_count; 
     }
   }
 
@@ -70,10 +72,13 @@ function Board() {
   const board_size = 10;
   const bomb_count = 30;
   const bomb_pos = calculateBombPosition(board_size, bomb_count);
-  const board = initialiseBoard(board_size, bomb_pos);
+  const [board, setBoard] = useState(initialiseBoard(board_size, bomb_pos));
   
   function handleClick(x, y) {
-    board[x][y].hide = false;
+    let newBoard = board.slice();
+    console.log("Clicked " + x + ", " + y);
+    newBoard[x][y].clicked = true;
+    setBoard(newBoard);
   }
 
   return (
@@ -86,7 +91,7 @@ function Board() {
           <tr>
           {row.map(cell => {
             return <td onClick={() => handleClick(cell.x, cell.y)}>
-              {cell.hide? '_' : cell.content}
+              {cell.clicked? cell.content : '_'}
               </td>
           })}
           </tr>
