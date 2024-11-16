@@ -30,5 +30,4 @@ td:active {
 
 td.clicked {
   border-style: none;
-  filter: brightness(95%);
 }

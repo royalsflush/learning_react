@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Board from './Board.js';
 import './App.css';
 
 function calculateBombPosition(board_size, bomb_count) {
@@ -69,51 +70,17 @@ function initialiseBoard(board_size, bomb_pos) {
   return board;
 }
 
-function Board() {
+
+
+function App() {
   const board_size = 10;
-  const bomb_count = 30;
+  const bomb_count = 20;
   const bomb_pos = calculateBombPosition(board_size, bomb_count);
   const [board, setBoard] = useState(initialiseBoard(board_size, bomb_pos));
   
-  function handleClick(e, x, y) {
-    let newBoard = board.slice();
-    if (e.type === 'click') {
-      newBoard[x][y].clicked = true;
-    } else if (e.type === 'contextmenu') {
-      e.preventDefault();
-      newBoard[x][y].flagged = !board[x][y].flagged;
-    }
-    setBoard(newBoard);
-  }
-
-  return (
-    <table>
-      <tr>
-        <th colSpan={board_size}>Minesweeper</th>
-      </tr>
-      {board.map(row => {
-        return (
-          <tr>
-          {row.map(cell => {
-            return <td
-                onClick={(e) => handleClick(e, cell.x, cell.y)}
-                onContextMenu={(e) => handleClick(e, cell.x, cell.y)}
-                className={cell.clicked? "clicked" : ""}
-              >
-              {cell.clicked? cell.content : cell.flagged? 'F' : ''}
-              </td>
-          })}
-          </tr>
-        );
-      })}
-    </table>
-  );
-}
-
-function App() {
   return (
     <div className="App">
-      <Board />          
+      <Board board={board} setBoard={setBoard} />          
     </div>
   );
 }
