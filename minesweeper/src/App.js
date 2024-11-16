@@ -1,24 +1,36 @@
 import './App.css';
 
+function calculateBombPosition(board_size, bomb_count) {
+  const bomb_pos = [];
+  while (bomb_pos.length < bomb_count) {
+    let x = Math.floor(Math.random() * board_size * board_size)
+    if (bomb_pos.indexOf(x) == -1) bomb_pos.push(x)
+  }
+
+  return bomb_pos;
+}
+
 function Board() {
   const board_size = 10;
   const bomb_count = 30;
   const board = Array(board_size);
+  const bomb_pos = calculateBombPosition(board_size, bomb_count);
   
-  const bomb_pos = [];
+
+  function handleClick(x, y) {
+    board[x][y].hide = false;
+  }
 
   for (let i=0; i<board_size; i++) {
     board[i] = Array(board_size);
 
     for (let j=0; j<board_size; j++)
       board[i][j] = {
-        content: '_'
+        x: i,
+        y: j,
+        content: '_',
+        hide: false
       }
-  }
-
-  while (bomb_pos.length < bomb_count) {
-    let x = Math.floor(Math.random() * board_size * board_size)
-    if (bomb_pos.indexOf(x) == -1) bomb_pos.push(x)
   }
 
   for (let i=0; i<bomb_count; i++) {
@@ -36,7 +48,9 @@ function Board() {
         return (
           <tr>
           {row.map(cell => {
-            return <td>{cell.content}</td>
+            return <td onClick={() => handleClick(cell.x, cell.y)}>
+              {cell.hide? '_' : cell.content}
+              </td>
           })}
           </tr>
         );
