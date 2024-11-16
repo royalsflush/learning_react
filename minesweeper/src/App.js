@@ -47,7 +47,8 @@ function initialiseBoard(board_size, bomb_pos) {
         x: i,
         y: j,
         content: '_',
-        clicked: false
+        clicked: false,
+        flagged: false
       }
   }
 
@@ -74,10 +75,14 @@ function Board() {
   const bomb_pos = calculateBombPosition(board_size, bomb_count);
   const [board, setBoard] = useState(initialiseBoard(board_size, bomb_pos));
   
-  function handleClick(x, y) {
+  function handleClick(e, x, y) {
     let newBoard = board.slice();
-    console.log("Clicked " + x + ", " + y);
-    newBoard[x][y].clicked = true;
+    if (e.type === 'click') {
+      newBoard[x][y].clicked = true;
+    } else if (e.type === 'contextmenu') {
+      e.preventDefault();
+      newBoard[x][y].flagged = !board[x][y].flagged;
+    }
     setBoard(newBoard);
   }
 
@@ -90,8 +95,10 @@ function Board() {
         return (
           <tr>
           {row.map(cell => {
-            return <td onClick={() => handleClick(cell.x, cell.y)}>
-              {cell.clicked? cell.content : '_'}
+            return <td
+              onClick={(e) => handleClick(e, cell.x, cell.y)}
+              onContextMenu={(e) => handleClick(e, cell.x, cell.y)}>
+              {cell.clicked? cell.content : cell.flagged? 'F' : '_'}
               </td>
           })}
           </tr>
