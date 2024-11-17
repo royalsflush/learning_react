@@ -80,6 +80,8 @@ function App() {
   }
 
   function onBoardFlag(x, y) {
+    if (board[x][y].clicked) return;
+
     let newBoard = board.slice();
     newBoard[x][y].flagged = !board[x][y].flagged;
    
@@ -125,6 +127,7 @@ function App() {
   }
 
   function onBoardClick(x, y) {
+    if (board[x][y].clicked) return;
     let newBoard = board.slice();
 
     if (gameState === GAME_STATE.NOT_STARTED) {
