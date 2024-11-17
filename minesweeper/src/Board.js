@@ -73,6 +73,8 @@ function Board(props) {
   const board = props.board;
 
   function handleClick(e, x, y) {
+    if (board[x][y].clicked) return;
+
     if (e.type === 'click') {
       props.onClick(x,y);
     } else if (e.type === 'contextmenu') {

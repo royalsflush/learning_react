@@ -64,8 +64,6 @@ function App() {
   }
 
   function checkWin() {
-    if (bombCount >0) return false;
-
     for (let i=0; i<board.length; i++) {
       for (let j=0; j<board[i].length; j++) {
         if (board[i][j].content === 'B' && board[i][j].flagged === false)
@@ -80,8 +78,6 @@ function App() {
   }
 
   function onBoardFlag(x, y) {
-    if (board[x][y].clicked) return;
-
     let newBoard = board.slice();
     newBoard[x][y].flagged = !board[x][y].flagged;
    
@@ -127,11 +123,13 @@ function App() {
   }
 
   function onBoardClick(x, y) {
-    if (board[x][y].clicked) return;
     let newBoard = board.slice();
 
     if (gameState === GAME_STATE.NOT_STARTED) {
       startGame();
+    } else if (gameState !== GAME_STATE.ACTIVE) {
+      // Nothing should happen when you click a finish game
+      return;
     }
 
     newBoard[x][y].clicked = true;
@@ -142,6 +140,7 @@ function App() {
     }
 
     setBoard(newBoard);
+    if (checkWin()) stopGame(GAME_STATE.WIN);
   }
 
   return (
