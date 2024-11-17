@@ -41,24 +41,43 @@ function Timer(props) {
 function App() {
   const [boardSize, setBoardSize] = useState(10);
   const [bombCount, setBombCount] = useState(2);
-  const [board, setBoard] = useState(initialiseBoard(boardSize, bombCount));
   const [gameState, setGameState] = useState(GAME_STATE.NOT_STARTED);
   const [timer, setTimer] = useState(0);
-  
-  var intervalCallback;
+  const [board, setBoard] = useState(() => {
+    const initialState = initialiseBoard(boardSize, bombCount);
+    return initialState;
+  });
+
+  let gameStartSeconds;
+  let intervalCallback;
 
   function resetGame() {
+    console.log("Game reset");
+
     setTimer(0);
     setGameState(GAME_STATE.NOT_STARTED);
-    setBoard(initialiseBoard(boardSize, bombCount));
+    let newBoard = initialiseBoard(boardSize, bombCount).slice();
+    setBoard(newBoard);
+  
+    console.log(board);
   }
 
   function startGame() {
-    intervalCallback = setInterval(() => {setTimer(timer => timer + 1)}, 1000);
+    console.log("Game started");
+
+    gameStartSeconds = Math.floor(Date.now()/1000);
+    console.log(gameStartSeconds);
+
+    intervalCallback = setInterval(() => {
+      let timeNow = Math.floor(Date.now()/1000);
+      setTimer(Math.floor(timeNow - gameStartSeconds));
+    }, 1000, [gameStartSeconds]);
+
     setGameState(GAME_STATE.ACTIVE);
   }
 
   function stopGame(newGameState) {
+    console.log("Game ended");
     clearInterval(intervalCallback);
     setGameState(newGameState);
   }
@@ -100,7 +119,6 @@ function App() {
       const cy = queue[0][1];
       newBoard[cx][cy].clicked = true;
       queue.splice(0,1); // pop front.
-      console.log(queue);
 
       for (let i=0; i<pos.length; i++) {
         let nx = cx+pos[i][0];

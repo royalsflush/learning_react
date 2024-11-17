@@ -33,15 +33,15 @@ function countAdjacentBombs(board, i, j) {
   return cnt;
 }
 
-export const initialiseBoard = (board_size, bomb_count) => {
-  const board = Array(board_size);
+export function initialiseBoard(board_size, bomb_count) {
+  let newBoard = new Array(board_size);
   const bomb_pos = calculateBombPosition(board_size, bomb_count);
 
   for (let i=0; i<board_size; i++) {
-    board[i] = Array(board_size);
+    newBoard[i] = new Array(board_size);
 
     for (let j=0; j<board_size; j++)
-      board[i][j] = {
+      newBoard[i][j] = {
         x: i,
         y: j,
         content: '',
@@ -53,18 +53,18 @@ export const initialiseBoard = (board_size, bomb_count) => {
   for (let i=0; i<bomb_pos.length; i++) {
     let x = Math.floor(bomb_pos[i]/board_size);
     let y = bomb_pos[i]%board_size;
-    board[x][y].content = 'B'
+    newBoard[x][y].content = 'B'
   }
 
   for (let i=0; i<board_size; i++) {
     for (let j=0; j<board_size; j++) {
-      if (board[i][j].content === 'B') continue;
-      const bomb_count = countAdjacentBombs(board, i, j);
-      board[i][j].content = bomb_count === 0? '' : bomb_count; 
+      if (newBoard[i][j].content === 'B') continue;
+      const bomb_count = countAdjacentBombs(newBoard, i, j);
+      newBoard[i][j].content = bomb_count === 0? '' : bomb_count; 
     }
   }
 
-  return board;
+  return newBoard;
 }
 
 
