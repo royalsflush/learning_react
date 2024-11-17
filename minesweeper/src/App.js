@@ -109,12 +109,12 @@ function Timer(props) {
 
 function App() {
   const [boardSize, setBoardSize] = useState(10);
-  const [bombCount, setBombCount] = useState(20);
+  const [bombCount, setBombCount] = useState(2);
   const [board, setBoard] = useState(initialiseBoard(boardSize, bombCount));
   const [gameState, setGameState] = useState(GAME_STATE.NOT_STARTED);
   const [timer, setTimer] = useState(0);
   
-  let intervalCallback = 0;
+  var intervalCallback;
 
   function resetGame() {
     setTimer(0);
@@ -144,6 +144,35 @@ function App() {
     setBoard(newBoard);
   }
 
+  function splashBoard(newBoard, x, y) {
+    const pos = [[1,0], [0,1], [-1, 0], [0,-1]];
+    let queue = [[x,y]];
+
+    while (queue.length > 0) {
+      const cx = queue[0][0];
+      const cy = queue[0][1];
+      newBoard[cx][cy].clicked = true;
+      queue.splice(0,1); // pop front.
+      console.log(queue);
+
+      for (let i=0; i<pos.length; i++) {
+        let nx = cx+pos[i][0];
+        let ny = cy+pos[i][1];
+
+        if (nx<0 || nx>=newBoard.length) continue;
+        if (ny<0 || ny>=newBoard[nx].length) continue;
+        if (newBoard[nx][ny].clicked) continue;
+
+        if (newBoard[nx][ny].content === '') {
+          newBoard[nx][ny].clicked = true;
+          queue.push([nx,ny]);
+        } else if (newBoard[nx][ny].content !== 'B') {
+          newBoard[nx][ny].clicked = true;
+        }
+      }
+    }
+  }
+
   function onBoardClick(x, y) {
     let newBoard = board.slice();
 
@@ -153,9 +182,12 @@ function App() {
 
     if (board[x][y].content === 'B') {
       stopGame();
+    } else if (newBoard[x][y].content !== '') {
+      newBoard[x][y].clicked = true;
+    } else {
+      splashBoard(newBoard, x, y)
     }
 
-    newBoard[x][y].clicked = true;
     setBoard(newBoard);
   }
 
