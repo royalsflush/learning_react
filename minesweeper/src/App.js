@@ -47,8 +47,8 @@ function App() {
     const initialState = initialiseBoard(boardSize, bombCount);
     return initialState;
   });
-  let gameStartSeconds = useRef(Math.floor(Date.now()/1000));
-  let intervalCallback = useRef(null);
+  const gameStartSeconds = useRef(Math.floor(Date.now()/1000));
+  const intervalCallback = useRef(null);
 
   function resetGame() {
     console.log("Game reset");
