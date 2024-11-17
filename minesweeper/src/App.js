@@ -71,16 +71,43 @@ function initialiseBoard(board_size, bomb_count) {
   return board;
 }
 
+const GAME_STATE = Object.freeze({
+  ACTIVE: Symbol("active"),
+  WIN:  Symbol("win"),
+  LOSE: Symbol("lose")
+});
+
 function BombCounter(props) {
   return <div className="bombCounter">{props.bombCount}</div> 
+}
+
+function GameState(props) {
+  function printState() {
+    if (props.gameState === GAME_STATE.ACTIVE) {
+      return "Go :)";
+    } else if (props.gameState === GAME_STATE.WIN) {
+      return "Yay safe :D";
+    } else {
+      return "Booom :(";
+    }
+  }
+
+  return (
+    <div>
+      <button onClick={props.handleClick}>
+        {printState()}
+      </button>
+    </div>
+  );
 }
 
 function App() {
   const [boardSize, setBoardSize] = useState(10);
   const [bombCount, setBombCount] = useState(20);
   const [board, setBoard] = useState(initialiseBoard(boardSize, bombCount));
- 
-  function onFlag(x, y) {
+  const [gameState, setGameState] = useState(GAME_STATE.ACTIVE);
+
+  function onBoardFlag(x, y) {
     let newBoard = board.slice();
     newBoard[x][y].flagged = !board[x][y].flagged;
    
@@ -92,19 +119,30 @@ function App() {
     setBoard(newBoard);
   }
 
-  function onClick(x, y) {
+  function onBoardClick(x, y) {
     let newBoard = board.slice();
+
+    if (board[x][y].content === 'B') {
+      setGameState(GAME_STATE.LOSE);
+    }
+
     newBoard[x][y].clicked = true;
     setBoard(newBoard);
+  }
+
+  function resetGame() {
+    setGameState(GAME_STATE.ACTIVE);
+    setBoard(initialiseBoard(boardSize, bombCount));
   }
 
   return (
     <div className="App">
       <Board
           board={board}
-          onFlag={onFlag}
-          onClick={onClick}>
+          onFlag={onBoardFlag}
+          onClick={onBoardClick}>
         <BombCounter bombCount={bombCount} />
+        <GameState gameState={gameState} handleClick={resetGame} />
       </Board>
     </div>
   );

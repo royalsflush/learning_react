@@ -15,7 +15,7 @@ th {
   border-width: 2px;
 }
 
-td {
+td.blank {
   width: 12px;
   height: 24px;
 
@@ -24,7 +24,7 @@ td {
   border-width: 2px;
 }
 
-td:active {
+td.blank:active {
   border-style: inset;
 }
 

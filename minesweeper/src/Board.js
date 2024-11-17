@@ -15,7 +15,9 @@ function Board(props) {
       <tr>
         <th colSpan={board.length}>Minesweeper</th>
       </tr>
-      <tr>{props.children}</tr>
+      <tr>
+        <td colSpan={board.length}>{props.children}</td>
+      </tr>
       {board.map(row => {
         return (
           <tr>
@@ -23,7 +25,7 @@ function Board(props) {
             return <td
                 onClick={(e) => handleClick(e, cell.x, cell.y)}
                 onContextMenu={(e) => handleClick(e, cell.x, cell.y)}
-                className={cell.clicked? "clicked" : ""}
+                className={cell.clicked? "clicked" : "blank"}
               >
               {cell.clicked? cell.content : cell.flagged? 'F' : ''}
               </td>
