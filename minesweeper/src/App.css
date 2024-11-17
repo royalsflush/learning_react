@@ -33,6 +33,10 @@ th {
   float: right;
 }
 
+tr {
+  height: 30px;
+}
+
 td.blank {
   width: 12px;
   height: 24px;

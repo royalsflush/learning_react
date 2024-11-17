@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Board, { initialiseBoard } from './Board.js';
 import './App.css';
 
@@ -58,9 +58,23 @@ function App() {
     setGameState(GAME_STATE.ACTIVE);
   }
 
-  function stopGame() {
+  function stopGame(newGameState) {
     clearInterval(intervalCallback);
-    setGameState(GAME_STATE.LOSE);
+    setGameState(newGameState);
+  }
+
+  function checkWin() {
+    if (bombCount >0) return false;
+
+    for (let i=0; i<board.length; i++) {
+      for (let j=0; j<board[i].length; j++) {
+        if (board[i][j].content === 'B' && board[i][j].flagged === false)
+          return false;
+        if (board[i][i].flagged === true && board[i][j].content !== 'B')
+          return false;
+      }
+    }
+    return true;
   }
 
   function onBoardFlag(x, y) {
@@ -72,6 +86,8 @@ function App() {
     } else {
       setBombCount(bombCount => bombCount + 1)
     }
+
+    if (checkWin()) stopGame(GAME_STATE.WIN);
     setBoard(newBoard);
   }
 
@@ -113,12 +129,11 @@ function App() {
 
     newBoard[x][y].clicked = true;
     if (board[x][y].content === 'B') {
-      stopGame();
+      stopGame(GAME_STATE.LOSE);
     }
 
     setBoard(newBoard);
   }
-
 
   return (
     <div className="App">
