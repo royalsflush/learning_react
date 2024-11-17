@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Board, { initialiseBoard } from './Board.js';
 import './App.css';
 
@@ -47,9 +47,8 @@ function App() {
     const initialState = initialiseBoard(boardSize, bombCount);
     return initialState;
   });
-
-  let gameStartSeconds;
-  let intervalCallback;
+  let gameStartSeconds = useRef(Math.floor(Date.now()/1000));
+  let intervalCallback = useRef(null);
 
   function resetGame() {
     console.log("Game reset");
@@ -64,21 +63,21 @@ function App() {
 
   function startGame() {
     console.log("Game started");
+    gameStartSeconds.current = Math.floor(Date.now()/1000);
 
-    gameStartSeconds = Math.floor(Date.now()/1000);
-    console.log(gameStartSeconds);
-
-    intervalCallback = setInterval(() => {
+    intervalCallback.current = setInterval(() => {
       let timeNow = Math.floor(Date.now()/1000);
-      setTimer(Math.floor(timeNow - gameStartSeconds));
+      setTimer(Math.floor(timeNow - gameStartSeconds.current));
     }, 1000, [gameStartSeconds]);
 
+    console.log(intervalCallback);
     setGameState(GAME_STATE.ACTIVE);
   }
 
   function stopGame(newGameState) {
     console.log("Game ended");
-    clearInterval(intervalCallback);
+    console.log(intervalCallback);
+    clearInterval(intervalCallback.current);
     setGameState(newGameState);
   }
 
