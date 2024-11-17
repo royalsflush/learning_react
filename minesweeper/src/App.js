@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Board from './Board.js';
 import './App.css';
 
@@ -72,18 +72,20 @@ function initialiseBoard(board_size, bomb_count) {
 }
 
 const GAME_STATE = Object.freeze({
+  NOT_STARTED: Symbol("not_started"),
   ACTIVE: Symbol("active"),
   WIN:  Symbol("win"),
   LOSE: Symbol("lose")
 });
 
 function BombCounter(props) {
-  return <div className="bombCounter">{props.bombCount}</div> 
+  return <div className="tableUtils bombCounter">{props.bombCount}</div> 
 }
 
 function GameState(props) {
   function printState() {
-    if (props.gameState === GAME_STATE.ACTIVE) {
+    if (props.gameState === GAME_STATE.ACTIVE ||
+        props.gameState === GAME_STATE.NOT_STARTED) {
       return "Go :)";
     } else if (props.gameState === GAME_STATE.WIN) {
       return "Yay safe :D";
@@ -93,7 +95,7 @@ function GameState(props) {
   }
 
   return (
-    <div>
+    <div className="tableUtils gameState">
       <button onClick={props.handleClick}>
         {printState()}
       </button>
@@ -101,11 +103,34 @@ function GameState(props) {
   );
 }
 
+function Timer(props) {
+  return <div className="timer">{props.timer}</div>;
+}
+
 function App() {
   const [boardSize, setBoardSize] = useState(10);
   const [bombCount, setBombCount] = useState(20);
   const [board, setBoard] = useState(initialiseBoard(boardSize, bombCount));
-  const [gameState, setGameState] = useState(GAME_STATE.ACTIVE);
+  const [gameState, setGameState] = useState(GAME_STATE.NOT_STARTED);
+  const [timer, setTimer] = useState(0);
+  
+  let intervalCallback = 0;
+
+  function resetGame() {
+    setTimer(0);
+    setGameState(GAME_STATE.NOT_STARTED);
+    setBoard(initialiseBoard(boardSize, bombCount));
+  }
+
+  function startGame() {
+    intervalCallback = setInterval(() => {setTimer(timer => timer + 1)}, 1000);
+    setGameState(GAME_STATE.ACTIVE);
+  }
+
+  function stopGame() {
+    clearInterval(intervalCallback);
+    setGameState(GAME_STATE.LOSE);
+  }
 
   function onBoardFlag(x, y) {
     let newBoard = board.slice();
@@ -122,18 +147,18 @@ function App() {
   function onBoardClick(x, y) {
     let newBoard = board.slice();
 
+    if (gameState === GAME_STATE.NOT_STARTED) {
+      startGame();
+    }
+
     if (board[x][y].content === 'B') {
-      setGameState(GAME_STATE.LOSE);
+      stopGame();
     }
 
     newBoard[x][y].clicked = true;
     setBoard(newBoard);
   }
 
-  function resetGame() {
-    setGameState(GAME_STATE.ACTIVE);
-    setBoard(initialiseBoard(boardSize, bombCount));
-  }
 
   return (
     <div className="App">
@@ -143,6 +168,7 @@ function App() {
           onClick={onBoardClick}>
         <BombCounter bombCount={bombCount} />
         <GameState gameState={gameState} handleClick={resetGame} />
+        <Timer gameState={gameState} timer={timer} setTimer={setTimer} />
       </Board>
     </div>
   );
