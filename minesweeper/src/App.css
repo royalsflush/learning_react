@@ -52,4 +52,7 @@ td.blank:active {
 
 td.clicked {
   border-style: none;
+
+  width: 16px;
+  height: 24px;
 }

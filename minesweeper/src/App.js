@@ -70,7 +70,9 @@ function App() {
       for (let j=0; j<board[i].length; j++) {
         if (board[i][j].content === 'B' && board[i][j].flagged === false)
           return false;
-        if (board[i][i].flagged === true && board[i][j].content !== 'B')
+        if (board[i][j].flagged === true && board[i][j].content !== 'B')
+          return false;
+        if (board[i][j].content !== 'B' && board[i][j].clicked === false)
           return false;
       }
     }
@@ -87,8 +89,8 @@ function App() {
       setBombCount(bombCount => bombCount + 1)
     }
 
-    if (checkWin()) stopGame(GAME_STATE.WIN);
     setBoard(newBoard);
+    if (checkWin()) stopGame(GAME_STATE.WIN);
   }
 
   function splashBoard(newBoard, x, y) {
@@ -118,6 +120,8 @@ function App() {
         }
       }
     }
+
+    return newBoard;
   }
 
   function onBoardClick(x, y) {
@@ -130,6 +134,8 @@ function App() {
     newBoard[x][y].clicked = true;
     if (board[x][y].content === 'B') {
       stopGame(GAME_STATE.LOSE);
+    } else if (board[x][y].content === '') {
+      newBoard = splashBoard(newBoard, x, y);
     }
 
     setBoard(newBoard);
