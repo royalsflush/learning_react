@@ -85,27 +85,30 @@ function Board(props) {
 
   return (
     <table>
-      <tr>
-        <th colSpan={board.length}>Minesweeper</th>
-      </tr>
-      <tr>
-        <td colSpan={board.length}>{props.children}</td>
-      </tr>
-      {board.map(row => {
-        return (
-          <tr>
-          {row.map(cell => {
-            return <td
-                onClick={(e) => handleClick(e, cell.x, cell.y)}
-                onContextMenu={(e) => handleClick(e, cell.x, cell.y)}
-                className={cell.clicked? "clicked" : "blank"}
-              >
-              {cell.clicked? cell.content : cell.flagged? 'F' : ''}
-              </td>
-          })}
-          </tr>
-        );
-      })}
+      <tbody>
+        <tr>
+          <th colSpan={board.length}>Minesweeper</th>
+        </tr>
+        <tr>
+          <td colSpan={board.length}>{props.children}</td>
+        </tr>
+        {board.map((row, rowIndex) => {
+          return (
+            <tr key={`row-${rowIndex}`}>
+              {row.map((cell, cellIndex) => {
+                return <td
+                    key={`cell-${cell.x}-${cell.y}`}
+                    onClick={(e) => handleClick(e, cell.x, cell.y)}
+                    onContextMenu={(e) => handleClick(e, cell.x, cell.y)}
+                    className={cell.clicked? "clicked" : "blank"}
+                  >
+                  {cell.clicked? cell.content : cell.flagged? 'F' : ''}
+                  </td>
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
     </table>
   );
 }

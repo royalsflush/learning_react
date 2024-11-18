@@ -1,37 +1,10 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Board, { initialiseBoard } from './Board.js';
+import GameState, { GAME_STATE } from './GameState.js';
 import './App.css';
-
-const GAME_STATE = Object.freeze({
-  NOT_STARTED: Symbol("not_started"),
-  ACTIVE: Symbol("active"),
-  WIN:  Symbol("win"),
-  LOSE: Symbol("lose")
-});
 
 function BombCounter(props) {
   return <div className="tableUtils bombCounter">{props.bombCount}</div> 
-}
-
-function GameState(props) {
-  function printState() {
-    if (props.gameState === GAME_STATE.ACTIVE ||
-        props.gameState === GAME_STATE.NOT_STARTED) {
-      return "Go :)";
-    } else if (props.gameState === GAME_STATE.WIN) {
-      return "Yay safe :D";
-    } else {
-      return "Booom :(";
-    }
-  }
-
-  return (
-    <div className="tableUtils gameState">
-      <button onClick={props.handleClick}>
-        {printState()}
-      </button>
-    </div>
-  );
 }
 
 function Timer(props) {
@@ -50,15 +23,29 @@ function App() {
   const gameStartSeconds = useRef(Math.floor(Date.now()/1000));
   const intervalCallback = useRef(null);
 
+  useEffect(() => {
+    console.log('Board updated:', board);
+  }, [board]);
+
   function resetGame() {
     console.log("Game reset");
+    
+    // Clear the timer interval if it exists
+    if (intervalCallback.current) {
+      clearInterval(intervalCallback.current);
+      intervalCallback.current = null;
+    }
 
+    // Create new board with fresh state
+    const newBoard = initialiseBoard(boardSize, bombCount);
+    
+    // Update all states at once
     setTimer(0);
     setGameState(GAME_STATE.NOT_STARTED);
-    let newBoard = initialiseBoard(boardSize, bombCount).slice();
     setBoard(newBoard);
-  
-    console.log(board);
+
+    // For debugging
+    console.log('New board created:', newBoard);
   }
 
   function startGame() {
@@ -70,13 +57,12 @@ function App() {
       setTimer(Math.floor(timeNow - gameStartSeconds.current));
     }, 1000, [gameStartSeconds]);
 
-    console.log(intervalCallback);
     setGameState(GAME_STATE.ACTIVE);
   }
 
   function stopGame(newGameState) {
     console.log("Game ended");
-    console.log(intervalCallback);
+
     clearInterval(intervalCallback.current);
     setGameState(newGameState);
   }
