@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Board from './Board.js';
-import { initialiseBoard, countRemainingBombs, checkWin } from './BoardUtils.js';
+import { initialiseBoard, countRemainingBombs, checkWin, splashBoard   } from './BoardUtils.js';
 import GameState, { GAME_STATE } from './GameState.js';
 import ChooseDifficulty from './ChooseDifficulty.js';
 import './App.css';
@@ -15,10 +15,16 @@ function Timer(props) {
 
 function App() {
   const [boardParams, setBoardParams] = useState({
-    size: 10,
+    width: 10,
+    height: 10,
     bombCount: 10,
   });
-  const [board, setBoard] = useState(initialiseBoard(boardParams.size, boardParams.bombCount));
+  const [board, setBoard] = useState(initialiseBoard(
+    boardParams.width,
+    boardParams.height,
+    boardParams.bombCount
+  ));
+
   const [gameState, setGameState] = useState(GAME_STATE.NOT_STARTED);
   const [timer, setTimer] = useState(0);
 
@@ -37,10 +43,14 @@ function App() {
     if (intervalCallback.current) {
       clearInterval(intervalCallback.current);
       intervalCallback.current = null;
-    }
+    }     
 
     // Create new board with fresh state
-    const newBoard = initialiseBoard(boardParams.size, boardParams.bombCount);
+    const newBoard = initialiseBoard(
+      boardParams.width,
+      boardParams.height,
+      boardParams.bombCount
+    );
     
     // Update all states at once
     setTimer(0);
@@ -71,6 +81,8 @@ function App() {
   }
 
   function onBoardFlag(x, y) {
+    if (!board?.[x]?.[y]) return;
+    
     let newBoard = board.slice();
     newBoard[x][y].flagged = !board[x][y].flagged;
 
@@ -78,43 +90,14 @@ function App() {
     setBoard(newBoard);
   }
 
-  function splashBoard(newBoard, x, y) {
-    const pos = [[1,0], [0,1], [-1, 0], [0,-1]];
-    let queue = [[x,y]];
-
-    while (queue.length > 0) {
-      const cx = queue[0][0];
-      const cy = queue[0][1];
-      newBoard[cx][cy].clicked = true;
-      queue.splice(0,1); // pop front.
-
-      for (let i=0; i<pos.length; i++) {
-        let nx = cx+pos[i][0];
-        let ny = cy+pos[i][1];
-
-        if (nx<0 || nx>=newBoard.length) continue;
-        if (ny<0 || ny>=newBoard[nx].length) continue;
-        if (newBoard[nx][ny].clicked) continue;
-
-        if (newBoard[nx][ny].content === '') {
-          newBoard[nx][ny].clicked = true;
-          queue.push([nx,ny]);
-        } else if (newBoard[nx][ny].content !== 'B') {
-          newBoard[nx][ny].clicked = true;
-        }
-      }
-    }
-
-    return newBoard;
-  }
-
   function onBoardClick(x, y) {
+    if (!board?.[x]?.[y]) return;
+    
     let newBoard = board.slice();
 
     if (gameState === GAME_STATE.NOT_STARTED) {
       startGame();
     } else if (gameState !== GAME_STATE.ACTIVE) {
-      // Nothing should happen when you click a finish game
       return;
     }
 

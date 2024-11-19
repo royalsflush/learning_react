@@ -1,9 +1,9 @@
 
 // private
-function calculateBombPosition(board_size, bomb_count) {
+function calculateBombPosition(width, height, bomb_count) {
     const bomb_pos = [];
     while (bomb_pos.length < bomb_count) {
-      let x = Math.floor(Math.random() * board_size * board_size)
+      let x = Math.floor(Math.random() * width * height)
       if (bomb_pos.indexOf(x) === -1) bomb_pos.push(x)
     }
   
@@ -37,14 +37,14 @@ function countAdjacentBombs(board, i, j) {
 }
 
 // public
-function initialiseBoard(board_size, bomb_count) {
-    let newBoard = new Array(board_size);
-    const bomb_pos = calculateBombPosition(board_size, bomb_count);
+function initialiseBoard(width, height, bomb_count) {
+    let newBoard = new Array(width);
+    const bomb_pos = calculateBombPosition(width, height, bomb_count);
   
-    for (let i=0; i<board_size; i++) {
-      newBoard[i] = new Array(board_size);
+    for (let i=0; i<width; i++) {
+      newBoard[i] = new Array(height);
   
-      for (let j=0; j<board_size; j++)
+      for (let j=0; j<height; j++)
         newBoard[i][j] = {
           x: i,
           y: j,
@@ -55,13 +55,13 @@ function initialiseBoard(board_size, bomb_count) {
     }
   
     for (let i=0; i<bomb_pos.length; i++) {
-      let x = Math.floor(bomb_pos[i]/board_size);
-      let y = bomb_pos[i]%board_size;
+      let x = Math.floor(bomb_pos[i]/width);
+      let y = bomb_pos[i]%width;
       newBoard[x][y].content = 'B'
     }
   
-    for (let i=0; i<board_size; i++) {
-      for (let j=0; j<board_size; j++) {
+    for (let i=0; i<width; i++) {
+      for (let j=0; j<height; j++) {
         if (newBoard[i][j].content === 'B') continue;
         const bomb_count = countAdjacentBombs(newBoard, i, j);
         newBoard[i][j].content = bomb_count === 0? '' : bomb_count; 
@@ -89,4 +89,34 @@ function checkWin(board) {
   return true;
 }
 
-export { initialiseBoard, countRemainingBombs, checkWin  };
+function splashBoard(newBoard, x, y) {
+  const pos = [[1,0], [0,1], [-1, 0], [0,-1]];
+  let queue = [[x,y]];
+
+  while (queue.length > 0) {
+    const cx = queue[0][0];
+    const cy = queue[0][1];
+    newBoard[cx][cy].clicked = true;
+    queue.splice(0,1); // pop front.
+
+    for (let i=0; i<pos.length; i++) {
+      let nx = cx+pos[i][0];
+      let ny = cy+pos[i][1];
+
+      if (nx<0 || nx>=newBoard.length) continue;
+      if (ny<0 || ny>=newBoard[nx].length) continue;
+      if (newBoard[nx][ny].clicked) continue;
+
+      if (newBoard[nx][ny].content === '') {
+        newBoard[nx][ny].clicked = true;
+        queue.push([nx,ny]);
+      } else if (newBoard[nx][ny].content !== 'B') {
+        newBoard[nx][ny].clicked = true;
+      }
+    }
+  }
+
+  return newBoard;
+}
+
+export { initialiseBoard, countRemainingBombs, checkWin, splashBoard };
