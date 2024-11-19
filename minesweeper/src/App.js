@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import Board, { initialiseBoard } from './Board.js';
+import Board from './Board.js';
+import initialiseBoard from './BoardInit.js';
 import GameState, { GAME_STATE } from './GameState.js';
 import './App.css';
 
