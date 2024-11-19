@@ -75,8 +75,8 @@ function initialiseBoard(width, height, bomb_count) {
     return newBoard;
 }
 
-function countRemainingBombs(board) {
-  return board.flat().filter(cell => cell.content === 'B' && !cell.flagged).length;
+function countRemainingBombs(board, bomb_count) {
+  return bomb_count - board.flat().filter(cell => cell.flagged).length;
 }
 
 function checkWin(board) {
@@ -110,6 +110,7 @@ function splashBoard(newBoard, x, y) {
       if (nx<0 || nx>=newBoard.length) continue;
       if (ny<0 || ny>=newBoard[nx].length) continue;
       if (newBoard[nx][ny].clicked) continue;
+      if (newBoard[nx][ny].flagged) continue;
 
       if (newBoard[nx][ny].content === '') {
         newBoard[nx][ny].clicked = true;

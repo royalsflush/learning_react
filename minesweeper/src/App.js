@@ -120,7 +120,7 @@ function App() {
           onClick={onBoardClick}
           boardParams={boardParams}
         >
-        <BombCounter bombCount={countRemainingBombs(board)} />
+        <BombCounter bombCount={countRemainingBombs(board, boardParams.bombCount)} />
         <GameState gameState={gameState} handleClick={resetGame} />
         <Timer gameState={gameState} timer={timer} setTimer={setTimer} />
       </Board>
