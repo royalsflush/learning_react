@@ -38,9 +38,6 @@ function countAdjacentBombs(board, i, j) {
 
 // public
 function initialiseBoard(board_size, bomb_count) {
-    this.setBoardSize(board_size);
-    this.setBombCount(bomb_count);
-
     let newBoard = new Array(board_size);
     const bomb_pos = calculateBombPosition(board_size, bomb_count);
   
