@@ -1,8 +1,16 @@
 function Board(props) {
   const board = props.board;
   const boardParams = props.boardParams;
-  const bomb = require('./assets/bomb.png');
-  const flag = require('./assets/flag.png');
+  const bombPath = require('./assets/bomb.png');
+  const flagPath = require('./assets/flag.png');
+
+  // Preload images.
+  function componentDidMount() {
+    const bomb = new Image();
+    bomb.src = bombPath;
+    const flag = new Image();
+    flag.src = flagPath;
+  }
 
   function handleClick(e, x, y) {
     if (board[x][y].clicked) return;
@@ -35,11 +43,11 @@ function Board(props) {
   function getCellContent(cell) {
     if (cell.clicked) {
       if (cell.content === 'B')
-        return <img src={bomb} alt="bomb" width="16px" height="24px"/>;
+        return <img src={bombPath} alt="bomb" width="16px" height="24px"/>;
       return cell.content;
     }
     if (cell.flagged) {
-      return <img src={flag} alt="flag" width="16px" height="24px"/>;
+      return <img src={flagPath} alt="flag" width="16px" height="24px"/>;
     }
     return '';
   }
