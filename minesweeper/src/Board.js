@@ -58,7 +58,7 @@ function Board(props) {
     <div className="board">
     <table>
       <tbody>
-        <tr>
+        <tr className="boardTitle">
           <th colSpan={boardParams.width}>Minesweeper</th>
         </tr>
         <tr className="boardUtils">
