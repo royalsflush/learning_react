@@ -4,8 +4,8 @@
   margin: 40px;
 }
 
-.board, .chooseDifficulty {
-  display: inline-block;
+.board, .sidePanel {
+  display: inline;
 }
 
 .chooseDifficulty {
@@ -14,7 +14,7 @@
   vertical-align: top;
 }
 
-.chooseDifficultyButton {
+.chooseDifficulty button {
   margin-left: 10px;
 }
 

@@ -1,4 +1,4 @@
-table {
+.boardTable {
     display: inline-block;
     background-color: #eeeeee;
   
@@ -6,7 +6,7 @@ table {
     border-width: 2px;
 }
   
-th {
+.boardTable th {
     border-style: outset;
     border-width: 2px;
 
@@ -14,18 +14,18 @@ th {
 }
 
 .boardTitle {
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bold;
     padding: 0px;
 }
   
-tr {
+.boardTable tr {
     height: 32px;
     margin: 0px;
     padding: 0px;
   }
   
-  td {
+.boardTable td {
     font-weight: bold;
     font-size: 20px;
     margin: 0px;
@@ -35,18 +35,18 @@ tr {
     height: 28px;
   }
   
-  td.blank {
+.boardTable td.blank {
     background-color: #eeeeee;
     border-style: outset;
     border-width: 2px;
     border-color: #e1e1e1;
   }
   
-  td.blank:active {
+.boardTable td.blank:active {
     border-style: inset;
   }
   
-  td.clicked {
+.boardTable td.clicked {
     width: 18px;
     height: 24px;
   
@@ -55,35 +55,35 @@ tr {
     border-color: #d9d9d9;
   }
   
-  td.one {
+.boardTable td.one {
   
     color: #0000ff;
   }
   
-  td.two {
+.boardTable td.two {
     color: #008000;
   } 
   
-  td.three {
+.boardTable td.three {
     color: #ff0000;
   }
   
-  td.four {
+.boardTable td.four {
     color: #000080;
   }
   
-  td.five {
+.boardTable td.five {
     color: #800000;
   }   
   
-  td.six {
+.boardTable td.six {
     color: #808000;
   } 
   
-  td.seven {
+.boardTable td.seven {
     color: #900bf0;
   } 
   
-  td.eight {
+.boardTable td.eight {
     color: #330080;
   }

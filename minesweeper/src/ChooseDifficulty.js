@@ -16,12 +16,23 @@ function ChooseDifficulty(props) {
     }
   
     return (
-      <div className="chooseDifficulty">
-        Choose Difficulty:
-        <button className="chooseDifficultyButton" onClick={setEasy}>Easy</button>
-        <button className="chooseDifficultyButton" onClick={setMedium}>Medium</button>
-        <button className="chooseDifficultyButton" onClick={setHard}>Hard</button>
-        <button className="chooseDifficultyButton" onClick={setExpert}>Expert</button>
+      <div className="sidePanel">
+        <div className="chooseDifficulty">
+          Choose Difficulty:
+          <button className="chooseDifficultyButton" onClick={setEasy}>Easy</button>
+          <button className="chooseDifficultyButton" onClick={setMedium}>Medium</button>
+          <button className="chooseDifficultyButton" onClick={setHard}>Hard</button>
+          <button className="chooseDifficultyButton" onClick={setExpert}>Expert</button>
+        </div>
+        <table className="leaderboard">
+          <tr>
+            <th colSpan="2">Leaderboard</th>
+          </tr>
+          <tr>
+            <th>Name</th>
+            <th>Time</th>
+          </tr>
+        </table>
       </div>
     );
   }
