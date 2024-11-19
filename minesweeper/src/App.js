@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import Board from './Board.js';
-import { initialiseBoard, countRemainingBombs, checkWin } from './BoardInit.js';
+import { initialiseBoard, countRemainingBombs, checkWin } from './BoardUtils.js';
 import GameState, { GAME_STATE } from './GameState.js';
+import ChooseDifficulty from './ChooseDifficulty.js';
 import './App.css';
 
 function BombCounter(props) {
@@ -10,29 +11,6 @@ function BombCounter(props) {
 
 function Timer(props) {
   return <div className="timer">{props.timer}</div>;
-}
-
-function ChooseDifficulty(props) {
-  function setEasy() {
-    props.setBoardParams({size: 10, bombCount: 10});
-  } 
-
-  function setMedium() {
-    props.setBoardParams({size: 15, bombCount: 20});
-  }
-
-  function setHard() {
-    props.setBoardParams({size: 20, bombCount: 30});
-  }
-
-  return (
-    <div className="chooseDifficulty">
-      Choose Difficulty:
-      <button className="chooseDifficultyButton" onClick={setEasy}>Easy</button>
-      <button className="chooseDifficultyButton" onClick={setMedium}>Medium</button>
-      <button className="chooseDifficultyButton" onClick={setHard}>Hard</button>
-    </div>
-  );
 }
 
 function App() {
