@@ -6,7 +6,7 @@ import ChooseDifficulty from './ChooseDifficulty.js';
 import './App.css';
 
 function BombCounter(props) {
-  return <div className="tableUtils bombCounter">{props.bombCount}</div> 
+  return <div className="bombCounter">{props.bombCount}</div> 
 }
 
 function Timer(props) {

@@ -1,3 +1,5 @@
+import './Board.css';
+
 function Board(props) {
   const board = props.board;
   const boardParams = props.boardParams;
@@ -59,8 +61,8 @@ function Board(props) {
         <tr>
           <th colSpan={boardParams.width}>Minesweeper</th>
         </tr>
-        <tr>
-          <td colSpan={boardParams.width}>{props.children}</td>
+        <tr className="boardUtils">
+          <th colSpan={boardParams.width}>{props.children}</th>
         </tr>
         {board.map((row, rowIndex) => {
           return (

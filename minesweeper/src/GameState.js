@@ -18,7 +18,7 @@ function GameState(props) {
     }
   
     return (
-      <div className="tableUtils gameState">
+      <div className="gameState">
         <button onClick={props.handleClick}>
           {printState()}
         </button>

@@ -1,6 +1,5 @@
 .App {
   padding: 10px;
-  border: 1px solid black;
   text-align: center;
   margin: 40px;
 }
@@ -19,30 +18,43 @@
   margin-left: 10px;
 }
 
-table {
-  display: inline-block;
-  background-color: #eeeeee;
-
-  border-style: outset;
-  border-width: 2px;
+.boardUtils {
+  margin: 5px;
 }
 
-th {
-  border-style: outset;
-  border-width: 2px;
-}
-
-.tableUtils {
-  margin: 5px; 
+.boardUtils div {
+  text-align: right;
   display: inline; 
 }
 
 .gameState {
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
 
-.bombCounter {
+.gameState button {
+  text-align: center;
+  margin-left: 10px;
+  border-style: outset;
+  border-width: 2px;
+  border-color: #e1e1e1;
+
+  height: 30px;
+}
+
+.gameState button:active {
+  border-style: inset;
+}
+
+.bombCounter, .timer {
+  font-family: 'Digital', monospace;
+  background-color: rgb(38, 38, 38);
+  color: red;
+  padding: 4px 8px;
+  width: 30px;
+  border-radius: 4px;
+  font-size: 30px;
   float: left;
 }
 
@@ -50,71 +62,9 @@ th {
   float: right;
 }
 
-tr {
-  height: 32px;
-  margin: 0px;
-  padding: 0px;
-}
-
-td {
-  font-weight: bold;
-  font-size: 20px;
-  margin: 0px;
-  padding: 0px;
-
-  width: 16px;
-  height: 28px;
-}
-
-td.blank {
-  background-color: #eeeeee;
-  border-style: outset;
-  border-width: 2px;
-  border-color: #e1e1e1;
-}
-
-td.blank:active {
-  border-style: inset;
-}
-
-td.clicked {
-  width: 18px;
-  height: 24px;
-
-  border-style: solid;
-  border-width: 1px;
-  border-color: #d9d9d9;
-}
-
-td.one {
-
-  color: #0000ff;
-}
-
-td.two {
-  color: #008000;
-} 
-
-td.three {
-  color: #ff0000;
-}
-
-td.four {
-  color: #000080;
-}
-
-td.five {
-  color: #800000;
-}   
-
-td.six {
-  color: #808000;
-} 
-
-td.seven {
-  color: #900bf0;
-} 
-
-td.eight {
-  color: #330080;
+@font-face {
+  font-family: 'Digital';
+  src: url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot');
+  src: url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff2') format('woff2'),
+       url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff') format('woff');
 }
