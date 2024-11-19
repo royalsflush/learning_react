@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Board from './Board.js';
-import { initialiseBoard, countRemainingBombs } from './BoardInit.js';
+import { initialiseBoard, countRemainingBombs, checkWin } from './BoardInit.js';
 import GameState, { GAME_STATE } from './GameState.js';
 import './App.css';
 
@@ -15,7 +15,7 @@ function Timer(props) {
 function App() {
   const [boardParams, setBoardParams] = useState({
     size: 10,
-    bombCount: 2,
+    bombCount: 10,
   });
   const [board, setBoard] = useState(initialiseBoard(boardParams.size, boardParams.bombCount));
   const [gameState, setGameState] = useState(GAME_STATE.NOT_STARTED);
@@ -68,26 +68,12 @@ function App() {
     setGameState(newGameState);
   }
 
-  function checkWin() {
-    for (let i=0; i<boardParams.size; i++) {
-      for (let j=0; j<boardParams.size; j++) {
-        if (board[i][j].content === 'B' && board[i][j].flagged === false)
-          return false;
-        if (board[i][j].flagged === true && board[i][j].content !== 'B')
-          return false;
-        if (board[i][j].content !== 'B' && board[i][j].clicked === false)
-          return false;
-      }
-    }
-    return true;
-  }
-
   function onBoardFlag(x, y) {
     let newBoard = board.slice();
     newBoard[x][y].flagged = !board[x][y].flagged;
 
+    if (checkWin(newBoard)) stopGame(GAME_STATE.WIN);
     setBoard(newBoard);
-    if (checkWin()) stopGame(GAME_STATE.WIN);
   }
 
   function splashBoard(newBoard, x, y) {
@@ -137,8 +123,8 @@ function App() {
       newBoard = splashBoard(newBoard, x, y);
     }
 
+    if (checkWin(newBoard)) stopGame(GAME_STATE.WIN);
     setBoard(newBoard);
-    if (checkWin()) stopGame(GAME_STATE.WIN);
   }
 
   return (

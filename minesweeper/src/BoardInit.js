@@ -74,4 +74,19 @@ function initialiseBoard(board_size, bomb_count) {
 function countRemainingBombs(board) {
   return board.flat().filter(cell => cell.content === 'B' && !cell.flagged).length;
 }
-export { initialiseBoard, countRemainingBombs };
+
+function checkWin(board) {
+  for (let i=0; i<board.length; i++) {
+    for (let j=0; j<board[i].length; j++) {
+      if (board[i][j].content === 'B' && board[i][j].flagged === false)
+        return false;
+      if (board[i][j].flagged === true && board[i][j].content !== 'B')
+        return false;
+      if (board[i][j].content !== 'B' && board[i][j].clicked === false)
+        return false;
+    }
+  }
+  return true;
+}
+
+export { initialiseBoard, countRemainingBombs, checkWin  };
