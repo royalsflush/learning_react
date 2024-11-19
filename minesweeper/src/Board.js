@@ -16,8 +16,20 @@ function Board(props) {
   }
 
   function getCellClass(cell) {
-    if (cell.clicked) return 'clicked';
-    return 'blank';
+    if (!cell.clicked) return 'blank';
+
+    let className = 'clicked ';
+
+    if (cell.content === 1) className += 'one';
+    else if (cell.content === 2) className += 'two';
+    else if (cell.content === 3) className += 'three';
+    else if (cell.content === 4) className += 'four';
+    else if (cell.content === 5) className += 'five';
+    else if (cell.content === 6) className += 'six';
+    else if (cell.content === 7) className += 'seven';
+    else if (cell.content === 8) className += 'eight';
+
+    return className;
   }
 
   function getCellContent(cell) {
