@@ -1,4 +1,5 @@
 import './Board.css';
+import { useEffect } from 'react';
 
 function Board(props) {
   const board = props.board;
@@ -7,12 +8,12 @@ function Board(props) {
   const flagPath = require('./assets/flag.png');
 
   // Preload images.
-  function componentDidMount() {
+  useEffect(() => {
     const bomb = new Image();
     bomb.src = bombPath;
     const flag = new Image();
     flag.src = flagPath;
-  }
+  }, []);
 
   function handleClick(e, x, y) {
     if (board[x][y].clicked) return;
