@@ -117,7 +117,9 @@ function App() {
       <Board
           board={board}
           onFlag={onBoardFlag}
-          onClick={onBoardClick}>
+          onClick={onBoardClick}
+          boardParams={boardParams}
+        >
         <BombCounter bombCount={countRemainingBombs(board)} />
         <GameState gameState={gameState} handleClick={resetGame} />
         <Timer gameState={gameState} timer={timer} setTimer={setTimer} />

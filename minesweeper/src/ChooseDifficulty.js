@@ -4,11 +4,15 @@ function ChooseDifficulty(props) {
     } 
   
     function setMedium() {
-      props.setBoardParams({width: 15, height: 15, bombCount: 20});
+      props.setBoardParams({width: 15, height: 15, bombCount: 40});
     }
   
     function setHard() {
-      props.setBoardParams({width: 20, height: 20, bombCount: 30});
+      props.setBoardParams({width: 20, height: 20, bombCount: 120});
+    }
+
+    function setExpert() {
+        props.setBoardParams({width: 30, height: 20, bombCount: 200});
     }
   
     return (
@@ -17,6 +21,7 @@ function ChooseDifficulty(props) {
         <button className="chooseDifficultyButton" onClick={setEasy}>Easy</button>
         <button className="chooseDifficultyButton" onClick={setMedium}>Medium</button>
         <button className="chooseDifficultyButton" onClick={setHard}>Hard</button>
+        <button className="chooseDifficultyButton" onClick={setExpert}>Expert</button>
       </div>
     );
   }

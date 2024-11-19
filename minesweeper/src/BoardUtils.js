@@ -1,12 +1,11 @@
-
 // private
 function calculateBombPosition(width, height, bomb_count) {
+    const total_cells = width * height;
     const bomb_pos = [];
     while (bomb_pos.length < bomb_count) {
-      let x = Math.floor(Math.random() * width * height)
-      if (bomb_pos.indexOf(x) === -1) bomb_pos.push(x)
+        let pos = Math.floor(Math.random() * total_cells);
+        if (bomb_pos.indexOf(pos) === -1) bomb_pos.push(pos);
     }
-  
     return bomb_pos;
 }
 
@@ -20,7 +19,7 @@ function countAdjacentBombs(board, i, j) {
     if (board.length <= i || board[i].length <= j) {
       console.log("Invalid coordinates passed to countAdjacentBombs");
       return 0;
-    }
+    }   
   
     let cnt=0;
     for (let k=0; k<pos.length; k++) {
@@ -38,36 +37,41 @@ function countAdjacentBombs(board, i, j) {
 
 // public
 function initialiseBoard(width, height, bomb_count) {
-    let newBoard = new Array(width);
-    const bomb_pos = calculateBombPosition(width, height, bomb_count);
-  
-    for (let i=0; i<width; i++) {
-      newBoard[i] = new Array(height);
-  
-      for (let j=0; j<height; j++)
-        newBoard[i][j] = {
-          x: i,
-          y: j,
-          content: '',
-          clicked: false,
-          flagged: false
+    if (!width || !height || width < 1 || height < 1) return [];
+    
+    // First create the board
+    let newBoard = new Array(height);
+    for (let i = 0; i < height; i++) {
+        newBoard[i] = new Array(width);
+        for (let j = 0; j < width; j++) {
+            newBoard[i][j] = {
+                x: i,
+                y: j,
+                content: '',
+                clicked: false,
+                flagged: false
+            }
         }
     }
-  
-    for (let i=0; i<bomb_pos.length; i++) {
-      let x = Math.floor(bomb_pos[i]/width);
-      let y = bomb_pos[i]%width;
-      newBoard[x][y].content = 'B'
+
+    // Then place bombs
+    const bomb_pos = calculateBombPosition(width, height, bomb_count);
+    for (let pos of bomb_pos) {
+        const x = Math.floor(pos / width);
+        const y = pos % width; 
+        newBoard[x][y].content = 'B';
     }
-  
-    for (let i=0; i<width; i++) {
-      for (let j=0; j<height; j++) {
+
+    // Then calculate the number of adjacent bombs for each cell and
+    // add that to the cell's content.
+    for (let i=0; i<height; i++) {
+      for (let j=0; j<width; j++) {
         if (newBoard[i][j].content === 'B') continue;
         const bomb_count = countAdjacentBombs(newBoard, i, j);
         newBoard[i][j].content = bomb_count === 0? '' : bomb_count; 
       }
     }
-  
+
     return newBoard;
 }
 

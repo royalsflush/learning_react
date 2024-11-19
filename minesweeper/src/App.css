@@ -54,10 +54,15 @@ tr {
   height: 30px;
 }
 
-td.blank {
-  width: 12px;
-  height: 24px;
+td {
+  margin: 0px;
+  padding: 0px;
 
+  width: 16px;
+  height: 28px;
+}
+
+td.blank {
   background-color: #eeeeee;
   border-style: outset;
   border-width: 2px;
@@ -68,8 +73,8 @@ td.blank:active {
 }
 
 td.clicked {
-  border-style: none;
-
   width: 16px;
   height: 24px;
+
+  border-style: none;
 }
