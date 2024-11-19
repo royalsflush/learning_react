@@ -71,4 +71,7 @@ function initialiseBoard(board_size, bomb_count) {
     return newBoard;
 }
 
-export default initialiseBoard;
+function countRemainingBombs(board) {
+  return board.flat().filter(cell => cell.content === 'B' && !cell.flagged).length;
+}
+export { initialiseBoard, countRemainingBombs };

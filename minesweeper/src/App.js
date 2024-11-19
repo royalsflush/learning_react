@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Board from './Board.js';
-import initialiseBoard from './BoardInit.js';
+import { initialiseBoard, countRemainingBombs } from './BoardInit.js';
 import GameState, { GAME_STATE } from './GameState.js';
 import './App.css';
 
@@ -13,11 +13,11 @@ function Timer(props) {
 }
 
 function App() {
-  const [boardData, setBoardData] = useState({
+  const [boardParams, setBoardParams] = useState({
     size: 10,
     bombCount: 2,
-    board: initialiseBoard(10, 2)
   });
+  const [board, setBoard] = useState(initialiseBoard(boardParams.size, boardParams.bombCount));
   const [gameState, setGameState] = useState(GAME_STATE.NOT_STARTED);
   const [timer, setTimer] = useState(0);
 
@@ -25,8 +25,8 @@ function App() {
   const intervalCallback = useRef(null);
 
   useEffect(() => {
-    console.log('Board updated:', boardData.board);
-  }, [boardData.board]);
+    console.log('Board updated:', board);
+  }, [board]);
 
   function resetGame() {
     console.log("Game reset");
@@ -38,16 +38,12 @@ function App() {
     }
 
     // Create new board with fresh state
-    const newBoard = initialiseBoard(boardData.size, boardData.bombCount);
+    const newBoard = initialiseBoard(boardParams.size, boardParams.bombCount);
     
     // Update all states at once
     setTimer(0);
     setGameState(GAME_STATE.NOT_STARTED);
-    setBoardData({
-      size: boardData.size,
-      bombCount: boardData.bombCount,
-      board: newBoard
-    });
+    setBoard(newBoard);
 
     // For debugging
     console.log('New board created:', newBoard);
@@ -73,13 +69,13 @@ function App() {
   }
 
   function checkWin() {
-    for (let i=0; i<boardData.size; i++) {
-      for (let j=0; j<boardData.size; j++) {
-        if (boardData.board[i][j].content === 'B' && boardData.board[i][j].flagged === false)
+    for (let i=0; i<boardParams.size; i++) {
+      for (let j=0; j<boardParams.size; j++) {
+        if (board[i][j].content === 'B' && board[i][j].flagged === false)
           return false;
-        if (boardData.board[i][j].flagged === true && boardData.board[i][j].content !== 'B')
+        if (board[i][j].flagged === true && board[i][j].content !== 'B')
           return false;
-        if (boardData.board[i][j].content !== 'B' && boardData.board[i][j].clicked === false)
+        if (board[i][j].content !== 'B' && board[i][j].clicked === false)
           return false;
       }
     }
@@ -87,22 +83,10 @@ function App() {
   }
 
   function onBoardFlag(x, y) {
-    let newBoard = boardData.board.slice();
-    newBoard[x][y].flagged = !boardData.board[x][y].flagged;
-   
-    if (newBoard[x][y].flagged) {
-      setBoardData({
-        size: boardData.size,
-        bombCount: boardData.bombCount - 1,
-        board: newBoard
-      });
-    } else {
-      setBoardData({
-        size: boardData.size,
-        bombCount: boardData.bombCount + 1,
-        board: newBoard
-      });
-    }
+    let newBoard = board.slice();
+    newBoard[x][y].flagged = !board[x][y].flagged;
+
+    setBoard(newBoard);
     if (checkWin()) stopGame(GAME_STATE.WIN);
   }
 
@@ -137,7 +121,7 @@ function App() {
   }
 
   function onBoardClick(x, y) {
-    let newBoard = boardData.board.slice();
+    let newBoard = board.slice();
 
     if (gameState === GAME_STATE.NOT_STARTED) {
       startGame();
@@ -147,27 +131,23 @@ function App() {
     }
 
     newBoard[x][y].clicked = true;
-    if (boardData.board[x][y].content === 'B') {
+    if (board[x][y].content === 'B') {
       stopGame(GAME_STATE.LOSE);
-    } else if (boardData.board[x][y].content === '') {
+    } else if (board[x][y].content === '') {
       newBoard = splashBoard(newBoard, x, y);
     }
 
-    setBoardData({
-      size: boardData.size,
-      bombCount: boardData.bombCount,
-      board: newBoard
-    });
+    setBoard(newBoard);
     if (checkWin()) stopGame(GAME_STATE.WIN);
   }
 
   return (
     <div className="App">
       <Board
-          board={boardData.board}
+          board={board}
           onFlag={onBoardFlag}
           onClick={onBoardClick}>
-        <BombCounter bombCount={boardData.bombCount} />
+        <BombCounter bombCount={countRemainingBombs(board)} />
         <GameState gameState={gameState} handleClick={resetGame} />
         <Timer gameState={gameState} timer={timer} setTimer={setTimer} />
       </Board>
