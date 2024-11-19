@@ -13,6 +13,7 @@ function Board(props) {
   }
 
   return (
+    <div className="board">
     <table>
       <tbody>
         <tr>
@@ -38,7 +39,8 @@ function Board(props) {
           );
         })}
       </tbody>
-    </table>
+      </table>
+    </div>
   );
 }
 

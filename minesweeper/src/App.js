@@ -12,6 +12,29 @@ function Timer(props) {
   return <div className="timer">{props.timer}</div>;
 }
 
+function ChooseDifficulty(props) {
+  function setEasy() {
+    props.setBoardParams({size: 10, bombCount: 10});
+  } 
+
+  function setMedium() {
+    props.setBoardParams({size: 15, bombCount: 20});
+  }
+
+  function setHard() {
+    props.setBoardParams({size: 20, bombCount: 30});
+  }
+
+  return (
+    <div className="chooseDifficulty">
+      Choose Difficulty:
+      <button className="chooseDifficultyButton" onClick={setEasy}>Easy</button>
+      <button className="chooseDifficultyButton" onClick={setMedium}>Medium</button>
+      <button className="chooseDifficultyButton" onClick={setHard}>Hard</button>
+    </div>
+  );
+}
+
 function App() {
   const [boardParams, setBoardParams] = useState({
     size: 10,
@@ -24,9 +47,10 @@ function App() {
   const gameStartSeconds = useRef(Math.floor(Date.now()/1000));
   const intervalCallback = useRef(null);
 
+  
   useEffect(() => {
-    console.log('Board updated:', board);
-  }, [board]);
+    resetGame();
+  }, [boardParams]);
 
   function resetGame() {
     console.log("Game reset");
@@ -137,6 +161,7 @@ function App() {
         <GameState gameState={gameState} handleClick={resetGame} />
         <Timer gameState={gameState} timer={timer} setTimer={setTimer} />
       </Board>
+      <ChooseDifficulty setBoardParams={setBoardParams} />
     </div>
   );
 }

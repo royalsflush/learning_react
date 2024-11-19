@@ -1,5 +1,22 @@
 .App {
+  padding: 10px;
+  border: 1px solid black;
   text-align: center;
+  margin: 40px;
+}
+
+.board, .chooseDifficulty {
+  display: inline-block;
+}
+
+.chooseDifficulty {
+  margin-left: 30px;
+  margin-top: 10px;
+  vertical-align: top;
+}
+
+.chooseDifficultyButton {
+  margin-left: 10px;
 }
 
 table {
