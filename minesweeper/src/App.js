@@ -13,20 +13,20 @@ function Timer(props) {
 }
 
 function App() {
-  const [boardSize, setBoardSize] = useState(10);
-  const [bombCount, setBombCount] = useState(2);
+  const [boardData, setBoardData] = useState({
+    size: 10,
+    bombCount: 2,
+    board: initialiseBoard(10, 2)
+  });
   const [gameState, setGameState] = useState(GAME_STATE.NOT_STARTED);
   const [timer, setTimer] = useState(0);
-  const [board, setBoard] = useState(() => {
-    const initialState = initialiseBoard(boardSize, bombCount);
-    return initialState;
-  });
+
   const gameStartSeconds = useRef(Math.floor(Date.now()/1000));
   const intervalCallback = useRef(null);
 
   useEffect(() => {
-    console.log('Board updated:', board);
-  }, [board]);
+    console.log('Board updated:', boardData.board);
+  }, [boardData.board]);
 
   function resetGame() {
     console.log("Game reset");
@@ -38,12 +38,16 @@ function App() {
     }
 
     // Create new board with fresh state
-    const newBoard = initialiseBoard(boardSize, bombCount);
+    const newBoard = initialiseBoard(boardData.size, boardData.bombCount);
     
     // Update all states at once
     setTimer(0);
     setGameState(GAME_STATE.NOT_STARTED);
-    setBoard(newBoard);
+    setBoardData({
+      size: boardData.size,
+      bombCount: boardData.bombCount,
+      board: newBoard
+    });
 
     // For debugging
     console.log('New board created:', newBoard);
@@ -69,13 +73,13 @@ function App() {
   }
 
   function checkWin() {
-    for (let i=0; i<board.length; i++) {
-      for (let j=0; j<board[i].length; j++) {
-        if (board[i][j].content === 'B' && board[i][j].flagged === false)
+    for (let i=0; i<boardData.size; i++) {
+      for (let j=0; j<boardData.size; j++) {
+        if (boardData.board[i][j].content === 'B' && boardData.board[i][j].flagged === false)
           return false;
-        if (board[i][j].flagged === true && board[i][j].content !== 'B')
+        if (boardData.board[i][j].flagged === true && boardData.board[i][j].content !== 'B')
           return false;
-        if (board[i][j].content !== 'B' && board[i][j].clicked === false)
+        if (boardData.board[i][j].content !== 'B' && boardData.board[i][j].clicked === false)
           return false;
       }
     }
@@ -83,16 +87,22 @@ function App() {
   }
 
   function onBoardFlag(x, y) {
-    let newBoard = board.slice();
-    newBoard[x][y].flagged = !board[x][y].flagged;
+    let newBoard = boardData.board.slice();
+    newBoard[x][y].flagged = !boardData.board[x][y].flagged;
    
     if (newBoard[x][y].flagged) {
-      setBombCount(bombCount => bombCount - 1)
+      setBoardData({
+        size: boardData.size,
+        bombCount: boardData.bombCount - 1,
+        board: newBoard
+      });
     } else {
-      setBombCount(bombCount => bombCount + 1)
+      setBoardData({
+        size: boardData.size,
+        bombCount: boardData.bombCount + 1,
+        board: newBoard
+      });
     }
-
-    setBoard(newBoard);
     if (checkWin()) stopGame(GAME_STATE.WIN);
   }
 
@@ -127,7 +137,7 @@ function App() {
   }
 
   function onBoardClick(x, y) {
-    let newBoard = board.slice();
+    let newBoard = boardData.board.slice();
 
     if (gameState === GAME_STATE.NOT_STARTED) {
       startGame();
@@ -137,23 +147,27 @@ function App() {
     }
 
     newBoard[x][y].clicked = true;
-    if (board[x][y].content === 'B') {
+    if (boardData.board[x][y].content === 'B') {
       stopGame(GAME_STATE.LOSE);
-    } else if (board[x][y].content === '') {
+    } else if (boardData.board[x][y].content === '') {
       newBoard = splashBoard(newBoard, x, y);
     }
 
-    setBoard(newBoard);
+    setBoardData({
+      size: boardData.size,
+      bombCount: boardData.bombCount,
+      board: newBoard
+    });
     if (checkWin()) stopGame(GAME_STATE.WIN);
   }
 
   return (
     <div className="App">
       <Board
-          board={board}
+          board={boardData.board}
           onFlag={onBoardFlag}
           onClick={onBoardClick}>
-        <BombCounter bombCount={bombCount} />
+        <BombCounter bombCount={boardData.bombCount} />
         <GameState gameState={gameState} handleClick={resetGame} />
         <Timer gameState={gameState} timer={timer} setTimer={setTimer} />
       </Board>
